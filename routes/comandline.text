@@ -1,0 +1,177 @@
+侍エンジニア塾Laravel基礎編の学習過程を記しています。
+
+①PHPのインストール方法
+
+パッケージリストの更新
+sudo yum -y update
+
+PHPの実行環境インストール
+sudo yum -y install php72-mbstring php72-pdo
+
+標準PHPリンクの削除
+sudo unlink /user/bin/php
+
+インストールしたphpへのリンク作成
+sudo ln -s /etc/alternatives/php7 /usr/bin/php
+
+②Composerのインストール
+
+Composerスクリプトダウンロード
+php -r "copy('https://getcomposer.org/installer','composer-setup.php');"
+
+Composerインストール
+sudo php composer-setup.php --install-dir=/usr/local/bin/ --filename=composer
+
+installの確認
+composer -v
+
+③Composerを使用してアプリの雛形を作る
+
+composer create-project --prefer-dist laravel/laravel samazon "5.8.*"
+--prefer-dist  (高速ダウンロードのオプション）
+laravel/laravel （使用するライブラリ名）
+samazon (インストールするディレクトリ名）
+"5.8.*"　（使用するlaravelのバージョン）
+
+作成されているか確認
+ls samazon
+
+3章　カテゴリを追加できるようにする
+
+④sqliteデータベース作成
+
+.envファイルでDB_CONNECTION=mysql を　sqlite に変更
+残りの5行HOSTからPASSWORDまでを消去
+
+samazonディレクトリに移動
+
+ 入力プロンプトを表示
+ sqlite database/database.sqlite
+ 
+ ファイルを生成(新しく作ったデータベースで、テーブル表示を実行すると、ファイルが作られる）
+ sqlite> .tables
+ 
+ データベースから出る
+ sqlite> .exit
+ 
+⑤カテゴリのモデルとマイグレーションファイルを作る
+
+CategoryというModel（App/Category.php)を作成
+php artisan make:model Category -m
+
+-m （マイグレーションファイル同時作成オプション）
+Model（App/Category.php)には、データベースからデータを取得するためのコードを記述する。
+
+マイグレーションファイルでは、データベースに新しいデーブルやカラムを追加したり、不要なものの削除ができる。
+
+⑥マイグレーションファイルに項目を追加
+/samazon/database/migrations/2020_06_15_080452_create_categories_table.phpに、データベースカラムを追加する
+
+マイグレーションを実行
+マイグレーションとは、変更したマイグレーションファイルをデータベースに適用すること
+php artisan migrate
+
+今後も、変更を加えたときは、その度に実行して変更を適用させること！！
+
+⑦カテゴリーを追加する
+
+コンソールでデータを作成できる。コントローラーに記述するコードを試せる
+php artisan tinker
+
+//Categoryの配列を格納
+$categories = Category::all //Categoryの配列を格納
+
+//変数を作成
+$category = new Category()
+
+//Foodを代入
+$category->major_category_name = "Food"
+
+//meatを代入
+$category->name = "meat"
+
+//description for meat.を代入
+$category->description = "description for meat."
+
+//これらをsave
+$category->save()
+
+//確認全てを見ることができる
+Category::all()
+
+⑧シーダーを作る　シーダー：（データを一気に作成することができる）⑦のように、一つ一つやったら大変。
+
+シーダー用ファイルを作成
+php artisan make:seeder CategoriesTableSeeder
+
+/samazon/database/seeds/CategoriesTableSeeder.phpを変更
+
+作成したシーダーファイルの読み込み
+composer dump-autoload
+
+カテゴリデータの作成
+php artisan db:seed --class=CategoriesTableSeeder
+
+Tinkerで確認
+php artisan tinker
+
+>>>Category::all()
+
+tinker終了
+>>>exit
+
+4章　商品を追加できるようにする
+
+①商品追加の雛形を作る
+
+Product モデルを作る　（Model＝使用するデータベースのこと！）
+php artisan make:model Product --all
+
+--all コントローラーも同時に作成するオプション
+
+②作成されたマイグレーションファイルを変更
+/samazon/database/migrations/2020_06_16_003815_create_products_table.phpを変更する
+
+
+③カテゴリーとの紐付けを行う
+/samazon/app/Product.phpを編集する
+
+/samazon/app/Category.php を編集する
+
+/samazon/database/migrations/2020_06_16_003815_create_products_table.phpにcategory_id カラムを追加
+
+④マイグレーションを実行
+php artisan migrate
+
+⑤商品用CRUDの作成
+
+CRUD用ルーティング（WebアプリのURLを設定すること）を設定する
+/samazon/routes/web.phpを編集
+
+
+モデルを使ったデータベース取得コードを記述し、取得したデータをviewに渡して表示
+/samazon/app/Http/Controllers/ProductController.phpを編集
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+ 
+ 
+
+
+
+
+
+
+
