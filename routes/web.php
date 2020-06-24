@@ -21,3 +21,7 @@ Route::resource('products', 'ProductController');
 //第2引数＝使用するコントローラー
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
