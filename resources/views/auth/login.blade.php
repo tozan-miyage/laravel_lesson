@@ -81,7 +81,7 @@
             <h3 class="mt-3 mb-3">ログイン</h3>
 
             <hr>
-            <form method="POST" action="{{ route('login') }}"> 
+            <form method="POST" action="{{ route('login') }}">
                 @csrf
 
                 <div class="form-group">
