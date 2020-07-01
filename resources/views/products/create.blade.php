@@ -1,16 +1,34 @@
-<h1>New Products</h1>
+@extends('layouts.app')
 
-<form method="POST" action="/products">　<!--productsフォルダに送信 -->
-    {{ csrf_field() }}<!--外部からのリクエストを弾くセキュリティ対策 -->
-    <input type="text" name="name"><!-- 商品名を記入-->
-    <textarea name="description"></textarea><!-- 商品説明を記入-->
-    <input type="number" name="price"><!-- 値段を記入-->
-    <select name="category_id"><!-- カテゴリーを選択-->
-        @foreach ($categories as $category)
-        <option value="{{ $category->id }}">{{ $category->name }}</option>
-        @endforeach
-    </select>
-    <button type="submit">Create</button><!-- 送信-->
-</form>
+@section('content')
+<div class="container">
+    <h1>新しい商品を追加</h1>
 
-<a href = "/products">Buck</a>
+    <form method="POST" action="/products">
+        {{ csrf_field() }}
+        <div class="form-group">
+            <label for="product-name">商品名</label>
+            <input type="text" name="name" id="product-name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="product-description">商品説明</label>
+            <textarea name="description" id="product-description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="product-price">価格</label>
+            <input type="number" name="price" id="product-price" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="product-category">カテゴリ</label>
+            <select name="category_id" class="form-control" id="product-category">
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">商品を登録</button>
+    </form>
+
+    <a href="/products">商品一覧に戻る</a>
+</div>
+@endsection
