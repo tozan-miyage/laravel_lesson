@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::post('products/{product}/reviews', 'ReviewController@store');
 //POSTで使用するルーティング第1引数商品データ取得URL　第２引数使用するコントローラーと、アクション指定
+Route::get('products/{product}/favorite', 'ProductController@favorite')->name('products.favorite');
 Route::resource('products', 'ProductController');
 //CRUD用URLを一度に定義する
 //第1引数＝URL文字列

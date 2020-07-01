@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,13 +16,26 @@ class ProductController extends Controller
      */
     public function index(Request $request)//作成された全ての商品を表示
     {
-        $products = Product::all();//全ての商品データをデータベースから取得し$productsに格納
-        
+        //$products = Product::all();全ての商品データをデータベースから取得し$productsに格納
+        $products = Product::paginate(15);//ページネーション
         return view('products.index',compact('products'));
         //products.index = /samazon/resources/views/products/index.blade.phpを使用
         //compact('products') = $productsをviewへ渡す
         //viewは、/samazon/resources/views/productsフォルダを作り、index.blade.phpを作成し、編集
     }
+    
+        public function favorite(Product $product)
+        {
+            $user = Auth::user();//現在にユーザー情報を代入
+            
+            if($user->hasFavorited($product)){//お気に入り済みかどうかをチェック
+                $user->unfavorite($product);
+            }else{
+                $user->favorite($product);
+            }
+            
+            return redirect()->route('products.show', $product);
+        }
 
     /**
      * Show the form for creating a new resource.
