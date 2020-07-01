@@ -45,4 +45,9 @@ public function sendEmailVerificationNotification()
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function reviews()
+    {
+        return $tihs->hasMany('App\Review');
+    }
 }

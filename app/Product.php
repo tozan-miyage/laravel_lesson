@@ -10,4 +10,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Category');//複数あるカテゴリのうち、一つを商品に保存する形beLongsTo
     }
+    
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');//1対多の関係性をモデルに追加している。
+    }
 }

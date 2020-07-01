@@ -63,7 +63,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)//自動的に該当するデータを判別して$productに代入している。
     {
-        return view('products.show', compact('product'));
+        $reviews = $product->reviews()->get();
+        //商品についての全てのレビューを取得して$reviewsに格納
+        
+        return view('products.show', compact('product','reviews'));
         //productsフォルダの、show.blade.phpを表示する。
     }
 
