@@ -90,6 +90,7 @@ label {
   letter-spacing: normal;
   color: #191919;
 }
+
 .samazon-login-input {
     border-radius: 2px;
     border: solid 1px #b2b2b2;
@@ -180,4 +181,19 @@ label {
 
 .text-favorite {
     color: #0fbe9f;
+}
+
+/*row col-2 container label .samazon-sidebar-category-label */
+#sidebar
+{
+  width:156px;
+  height:20px;
+  font-family:YuGo;
+  font-size:13px;
+  font-weight:500;
+  font-stretch:normal;
+  font-style:normal;
+  line-height:normal;
+  letter-spacing:normal;
+  color:#191919;
 }

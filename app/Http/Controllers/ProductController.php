@@ -16,9 +16,36 @@ class ProductController extends Controller
      */
     public function index(Request $request)//作成された全ての商品を表示
     {
+        $sort_query = [];
+        $sorted = "";
+        
+        if ($request->sort !== null){
+            $slices = explode(' ', $request->sort);
+            $sort_query[$slices[0]] = $slices[1];
+            $sorted = $request->sort;
+        }
         //$products = Product::all();全ての商品データをデータベースから取得し$productsに格納
-        $products = Product::paginate(15);//ページネーション
-        return view('products.index',compact('products'));
+        if ($request->categories !== null){
+            $products = Product::where('category_id',$request->category)->sorttable($sort_query)->paginate(15);
+            $category = Category::find($request->category);
+        }else{
+            $products = Product::sortable($sort_query)->paginate(15);
+            $category = null;
+        }//ページネーション
+        
+        $sort = [
+            '並び替え' => '',
+            '価格の安い順' => 'price asc',
+            '価格の高い順' => 'price desc',
+            '出品の古い順' => 'updated_at asc',
+            '出品の新しい順' => 'updated_at desc',
+            ];
+        
+        $categories = Category::all();//変数に全カテゴリーを代入
+        
+        $major_category_names = Category::pluck('major_category_name')->unique();//重複部分は取り除くunique()
+        
+        return view('products.index',compact('products','category', 'categories','major_category_names','sort', 'sorted'));//viewへ$categoriesを
         //products.index = /samazon/resources/views/products/index.blade.phpを使用
         //compact('products') = $productsをviewへ渡す
         //viewは、/samazon/resources/views/productsフォルダを作り、index.blade.phpを作成し、編集
