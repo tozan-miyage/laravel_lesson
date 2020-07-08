@@ -22,11 +22,11 @@ public function sendEmailVerificationNotification()
     }
     /**
      * The attributes that are mass assignable.
-     *
+     *アカウント作成時に入力した内容が保存される
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','postal_code', 'address', 'phone'
     ];
 
     /**

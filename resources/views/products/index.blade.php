@@ -3,6 +3,7 @@
 
 <div class="row">
     <div class="col-2">
+
         @component('components.sidebar',['categories' => $categories, 'major_category_names' => $major_category_names])
         @endcomponent<!-- 連想配列でcomponentへ変数を渡すことができる-->
     </div>
@@ -39,12 +40,16 @@
                             <p class="samazon-product-label mt-2">
                                 {{$product->name}}<br>
                                 <label>￥{{$product->price}}</label>
+                                <br>
+                                <a href="{{route('products.show', $product)}}">Show</a>
+                                <a href="{{route('products.edit', $product)}}">edit</a> 
                             </p>
                         </div>
                     </div>
                 </div>
                 @endforeach
             </div>
+            <a href="{{route('products.create')}}">New</a> 
         </div>
         {{ $products->links() }}
     </div>

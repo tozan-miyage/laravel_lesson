@@ -25,8 +25,8 @@ class ProductController extends Controller
             $sorted = $request->sort;
         }
         //$products = Product::all();全ての商品データをデータベースから取得し$productsに格納
-        if ($request->categories !== null){
-            $products = Product::where('category_id',$request->category)->sorttable($sort_query)->paginate(15);
+        if ($request->category !== null){
+            $products = Product::where('category_id',$request->category)->sortable($sort_query)->paginate(15);
             $category = Category::find($request->category);
         }else{
             $products = Product::sortable($sort_query)->paginate(15);
