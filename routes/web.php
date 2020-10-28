@@ -10,13 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'WebController@index')->name('web.index');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-
+Route::get('users/carts', 'CartController@index')->name('carts.index');
+Route::post('users/carts', 'CartController@store')->name('carts.store');
+Route::delete('users/carts', 'CartController@destroy')->name('carts.destroy');
 Route::get('products/index', 'ProductController@index')->name('index');
+
 //users/mypageがリクエストされたら、UserController@mypageを実行せよ。名前は{{ mypage }}とする。
 Route::get('users/mypage', 'UserController@mypage')->name('mypage');
 //users/mypage/editがリクエストされたら、UserController@editを実行せよ。名前は{{ mypage.edit }}とする。

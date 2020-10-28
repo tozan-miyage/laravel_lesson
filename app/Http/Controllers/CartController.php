@@ -107,7 +107,7 @@ class CartController extends Controller
         $count += 1;
         // 商品情報をデータベースに保存
         Cart::instance(Auth::user()->id)->store;
-        // データ更新　shoppingcartの
+        // データ更新　shoppingcartのユーザーインスタンスのnumberとbuy_flagを更新
         DB::table('shoppingcart')->where('instance', Auth::user()->id)->where('number', null)->update(['number' => $count, 'buy_flag' => true]);
 
         Cart::instance(Auth::user()->id)->destroy();

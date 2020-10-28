@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-light shadow-sm samazon-header-container">
-    <a class="navbar-brand" href="{{ route('index') }}">
+    <a class="navbar-brand" href="{{ route('web.index') }}">
         <img src="{{asset('img/logo.jpg')}}">
         <!--{{ config('app.name', 'Laravel') }}-->
     </a>
@@ -37,6 +37,11 @@
             <li class="nav-item mr-5">
                 <a class="nav-link" href="{{ route('mypage') }}">
                     <i class="fas fa-user mr-1"></i><label>マイページ</label>
+                </a>
+            </li>
+            <li class="nav-item mr-5">
+                <a class="nav-link" href="{{ route('carts.index') }}">
+                    <i class="fas fa-shopping-cart"></i>
                 </a>
             </li>
             @endguest
